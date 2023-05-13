@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Promises Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    #output {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <button id="start-button">Start Promise Chain</button>
+  <div id="output"></div>
+
+  <script>
+    const startButton = document.getElementById('start-button');
+    const outputDiv = document.getElementById('output');
+
+    const PromiseAPI1 = () => {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          fetch('https://dummyjson.com/posts')
+            .then(response => response.json())
+            .then(data => {
+              const output = `PromiseAPI1: ${JSON.stringify(data)}`;
+              outputDiv.innerHTML += output + '<br>';
+              resolve(true);
+            });
+        }, 1000);
+      });
+    };
+
+    const PromiseAPI2 = () => {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          fetch('https://dummyjson.com/products')
+            .then(response => response.json())
+            .then(data => {
+              const output = `PromiseAPI2: ${JSON.stringify(data)}`;
+              outputDiv.innerHTML += output + '<br>';
+              resolve(true);
+            });
+        }, 2000);
+      });
+    };
+
+    const PromiseAPI3 = () => {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          fetch('https://dummyjson.com/todos')
+            .then(response => response.json())
+            .then(data => {
+              const output = `PromiseAPI3: ${JSON.stringify(data)}`;
+              outputDiv.innerHTML += output + '<br>';
+              resolve(true);
+            });
+        }, 3000);
+      });
+    };
+
+    startButton.addEventListener('click', async () => {
+      try {
+        await PromiseAPI1();
+        await PromiseAPI2();
+        await PromiseAPI3();
+      } catch (error) {
+        console.error(error);
+      }
+    });
+
+  </script>
+
+</body>
+</html>
